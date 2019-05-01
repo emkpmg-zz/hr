@@ -7,6 +7,9 @@ Created on Tue Apr 30 09:30:03 2019
 
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+import numpy as np
+from PIL import Image
+
 
 #Use one-hot encoding for output labels
 #with all digits ranging from 0-9
@@ -152,13 +155,14 @@ testDataAccuracy = graphSession.run(predictionAccuracy, feed_dict={inputTensor: 
 print("\nTest Data Accuracy  :", testDataAccuracy)
 
 
+#Improving Accuracy -- Alterable parameters
+#learning rate, regParameter, hidden layer units, batch size, no. of hidden layers and iterations.
 
+testImage = np.invert(Image.open("handwrittenDigitImage2.png").convert('L')).ravel()
 
-
-
-
-
-
+#now we can predict what handwritten digit is on this image
+predictHandDigit = graphSession.run(tf.argmax(outputLayerWB, 1), feed_dict={inputTensor: [testImage]})
+print ("Written digit in image is :", np.squeeze(predictHandDigit))
 
 
 
